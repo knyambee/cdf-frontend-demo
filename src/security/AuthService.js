@@ -17,6 +17,7 @@ const login = (onAuthenticatedCallback) => {
         alert("Not authenticated");
       }
       localStorage.setItem("bearer-token", keycloakInstance.token);
+      localStorage.setItem("username", keycloakInstance.tokenParsed.name);
 
     })
     .catch((e) => {
