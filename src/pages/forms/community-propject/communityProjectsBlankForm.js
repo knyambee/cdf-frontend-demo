@@ -1,3 +1,5 @@
+import { getReferenceNumber } from "utils/forms-util";
+
 const fields = {
   communityName: "",
   district: "",
@@ -29,6 +31,10 @@ const fields = {
   addressProjectSeconder: "",
   phoneProjectSeconder: "",
   dateSignedSeconder: "",
+  userId: localStorage.getItem('userId'),
+  dateCreated: "",
+  status: 0,
+  referenceNo: getReferenceNumber(),
 };
 
 export { fields };

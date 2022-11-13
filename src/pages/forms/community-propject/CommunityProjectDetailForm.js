@@ -20,8 +20,11 @@ export default function CommunityProjectDetailForm({
     }));
   };
 
+  
+
   formFields.dateSignedProposer = dateSignedProposerValue;
-  formFields.dateSignedSeconder = dateSignedSeconderValue;
+  formFields.dateSignedSeconder = dateSignedSeconderValue;  
+
 
   return (
     <React.Fragment>

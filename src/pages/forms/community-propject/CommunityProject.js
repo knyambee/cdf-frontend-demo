@@ -23,7 +23,6 @@ const CommunityProject = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formFields, setFormFields] = React.useState(fields);
 
-
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -58,6 +57,7 @@ const CommunityProject = () => {
   };
 
   const handleSubmitApplication = () => {
+    
     try {
       api.post("/communityprojects", formFields, {headers: {'Authorization': `Bearer ${localStorage.getItem("bearer-token")}`}});
     } catch (err) {

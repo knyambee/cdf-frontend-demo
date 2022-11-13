@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
@@ -10,23 +10,7 @@ import NumberFormat from 'react-number-format';
 
 // project import
 import Dot from 'components/@extended/Dot';
-
-function createData(trackingNo, name, fat, carbs, protein) {
-    return { trackingNo, name, fat, carbs, protein };
-}
-
-const rows = [
-    createData(84564564, 'Camera Lens', 40, 2, 40570),
-    createData(98764564, 'Laptop', 300, 0, 180139),
-    createData(98756325, 'Mobile', 355, 1, 90989),
-    createData(98652366, 'Handset', 50, 1, 10239),
-    createData(13286564, 'Computer Accessories', 100, 1, 83348),
-    createData(86739658, 'TV', 99, 0, 410780),
-    createData(13256498, 'Keyboard', 125, 2, 70999),
-    createData(98753263, 'Mouse', 89, 2, 10570),
-    createData(98753275, 'Desktop', 185, 1, 98063),
-    createData(98753291, 'Chair', 100, 0, 14001)
-];
+import api from 'api/api';
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -54,45 +38,44 @@ function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-// ==============================|| ORDER TABLE - HEADER CELL ||============================== //
+// ==============================|| APPLICATIONS TABLE - HEADER CELL ||============================== //
 
 const headCells = [
     {
-        id: 'trackingNo',
+        id: 'referenceNo',
         align: 'left',
         disablePadding: false,
-        label: 'Tracking No.'
+        label: 'Reference No.'
     },
     {
-        id: 'name',
+        id: 'applicant',
         align: 'left',
         disablePadding: true,
-        label: 'Product Name'
+        label: 'Applicant'
     },
     {
-        id: 'fat',
+        id: 'fund',
+        align: 'left',
+        disablePadding: true,
+        label: 'Funding'
+    },
+    {
+        id: 'date',
         align: 'right',
         disablePadding: false,
-        label: 'Total Order'
+        label: 'Date Submitted'
     },
     {
-        id: 'carbs',
-        align: 'left',
-        disablePadding: false,
-
-        label: 'Status'
-    },
-    {
-        id: 'protein',
+        id: 'amount',
         align: 'right',
         disablePadding: false,
         label: 'Total Amount'
     }
 ];
 
-// ==============================|| ORDER TABLE - HEADER ||============================== //
+// ==============================|| APPLICATIONS TABLE - HEADER ||============================== //
 
-function OrderTableHead({ order, orderBy }) {
+function ApplicationsTableHead({ order, orderBy }) {
     return (
         <TableHead>
             <TableRow>
@@ -111,14 +94,14 @@ function OrderTableHead({ order, orderBy }) {
     );
 }
 
-OrderTableHead.propTypes = {
+ApplicationsTableHead.propTypes = {
     order: PropTypes.string,
     orderBy: PropTypes.string
 };
 
-// ==============================|| ORDER TABLE - STATUS ||============================== //
+// ==============================|| APPLICATIONS TABLE - STATUS ||============================== //
 
-const OrderStatus = ({ status }) => {
+const ApplicationStatus = ({ status }) => {
     let color;
     let title;
 
@@ -148,19 +131,33 @@ const OrderStatus = ({ status }) => {
     );
 };
 
-OrderStatus.propTypes = {
+ApplicationStatus.propTypes = {
     status: PropTypes.number
 };
 
-// ==============================|| ORDER TABLE ||============================== //
+// ==============================|| APPLICATIONS TABLE ||============================== //
 
-export default function OrderTable() {
+export default function PendingTasks() {
     const [order] = useState('asc');
-    const [orderBy] = useState('trackingNo');
+    const [orderBy] = useState('referenceNo');
     const [selected] = useState([]);
+    const [userApplications, setUserApplications] = useState([]);
 
-    const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
+    const isSelected = (referenceNo) => selected.indexOf(referenceNo) !== -1;
 
+    // useEffect(() => {
+    //     const fetchUserApplications = async () => {
+    //         try {
+    //             const response = await api.get('/communityprojects', {headers: {'Authorization': `Bearer ${localStorage.getItem("bearer-token")}`}});
+    //             setUserApplications(response.data._embedded.communityProjectses[0]);
+    //         } catch (error) {
+    //             console.log(`Error ${error.response.data}`);
+    //         }
+    //     }
+    //     fetchUserApplications();
+    // }, []);
+
+     
     return (
         <Box>
             <TableContainer
@@ -184,10 +181,10 @@ export default function OrderTable() {
                         }
                     }}
                 >
-                    <OrderTableHead order={order} orderBy={orderBy} />
+                    <ApplicationsTableHead order={order} orderBy={orderBy} />
                     <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-                            const isItemSelected = isSelected(row.trackingNo);
+                        {userApplications.map((application, index) => {
+                            const isItemSelected = isSelected(userApplications.referenceNo);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
@@ -197,21 +194,21 @@ export default function OrderTable() {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     aria-checked={isItemSelected}
                                     tabIndex={-1}
-                                    key={row.trackingNo}
+                                    key={index}
                                     selected={isItemSelected}
                                 >
                                     <TableCell component="th" id={labelId} scope="row" align="left">
                                         <Link color="secondary" component={RouterLink} to="">
-                                            {row.trackingNo}
+                                            {application.userId}
                                         </Link>
                                     </TableCell>
-                                    <TableCell align="left">{row.name}</TableCell>
-                                    <TableCell align="right">{row.fat}</TableCell>
+                                    <TableCell align="left">{application.nameProjectSeconder}</TableCell>
+                                    <TableCell align="right">{application.date}</TableCell>
                                     <TableCell align="left">
-                                        <OrderStatus status={row.carbs} />
+                                        <ApplicationStatus status={application.status} />
                                     </TableCell>
                                     <TableCell align="right">
-                                        <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
+                                        <NumberFormat value={application.estimatedCost} displayType="text" thousandSeparator prefix="ZMK" />
                                     </TableCell>
                                 </TableRow>
                             );

@@ -19,9 +19,11 @@ import {
 } from '@mui/material';
 
 // project import
-import OrdersTable from './OrdersTable';
+import ApplicationsTable from './ApplicationsTable';
+import PendingTasks from './PendingTasks';
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
+import RenderOnRole from 'security/RenderOnRole';
 
 // assets
 import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
@@ -76,7 +78,7 @@ const DashboardDefault = () => {
                 <Typography variant="h5">Dashboard</Typography>
             </Grid>
             <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
-
+            <RenderOnRole roles={['Applicant']}>
             <Grid item xs={12} md={7} lg={8}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
@@ -85,9 +87,26 @@ const DashboardDefault = () => {
                     <Grid item />
                 </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <OrdersTable />
+                    <ApplicationsTable />
                 </MainCard>
             </Grid>
+            </RenderOnRole>
+
+            <RenderOnRole roles={['Admin']}>   
+            <Grid item xs={12} md={7} lg={8}>
+                <Grid container alignItems="center" justifyContent="space-between">
+                    <Grid item>
+                        <Typography variant="h5">Pending Tasks</Typography>
+                    </Grid>
+                    <Grid item />
+                </Grid>
+                <MainCard sx={{ mt: 2 }} content={false}>
+                    <PendingTasks />
+                </MainCard>
+            </Grid>
+
+            </RenderOnRole>
+
             {/* row 4 */}
             <Grid item xs={12} md={5} lg={4}>
                 <Grid container alignItems="center" justifyContent="space-between">
@@ -120,14 +139,11 @@ const DashboardDefault = () => {
                                     <GiftOutlined />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={<Typography variant="subtitle1">Order #002434</Typography>} secondary="Today, 2:00 AM" />
+                            <ListItemText primary={<Typography variant="subtitle1">Funding #002434</Typography>} secondary="Today, 2:00 AM" />
                             <ListItemSecondaryAction>
                                 <Stack alignItems="flex-end">
                                     <Typography variant="subtitle1" noWrap>
-                                        + $1,430
-                                    </Typography>
-                                    <Typography variant="h6" color="secondary" noWrap>
-                                        78%
+                                        ZMK10,000
                                     </Typography>
                                 </Stack>
                             </ListItemSecondaryAction>
@@ -144,16 +160,13 @@ const DashboardDefault = () => {
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText
-                                primary={<Typography variant="subtitle1">Order #984947</Typography>}
+                                primary={<Typography variant="subtitle1">Funding #984947</Typography>}
                                 secondary="5 August, 1:45 PM"
                             />
                             <ListItemSecondaryAction>
                                 <Stack alignItems="flex-end">
                                     <Typography variant="subtitle1" noWrap>
-                                        + $302
-                                    </Typography>
-                                    <Typography variant="h6" color="secondary" noWrap>
-                                        8%
+                                        ZMK200,000
                                     </Typography>
                                 </Stack>
                             </ListItemSecondaryAction>
@@ -169,14 +182,11 @@ const DashboardDefault = () => {
                                     <SettingOutlined />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={<Typography variant="subtitle1">Order #988784</Typography>} secondary="7 hours ago" />
+                            <ListItemText primary={<Typography variant="subtitle1">Funding #988784</Typography>} secondary="7 hours ago" />
                             <ListItemSecondaryAction>
                                 <Stack alignItems="flex-end">
                                     <Typography variant="subtitle1" noWrap>
-                                        + $682
-                                    </Typography>
-                                    <Typography variant="h6" color="secondary" noWrap>
-                                        16%
+                                        ZMK18,000
                                     </Typography>
                                 </Stack>
                             </ListItemSecondaryAction>
