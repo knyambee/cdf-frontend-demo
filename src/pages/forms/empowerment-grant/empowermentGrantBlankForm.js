@@ -1,3 +1,5 @@
+import { getReferenceNumber } from "utils/forms-util";
+
 const fields = {
   applicantName: "",
   district: "",
@@ -6,7 +8,7 @@ const fields = {
   zone: "",
   businessAddress: "",
   registrationDate: "",
-  organiseSimilarEvents: no,
+  organiseSimilarEvents: "",
   similarExperience: "",
   mainProblems: "",
   problemAddressed: "",
@@ -37,6 +39,10 @@ const fields = {
   secondApplicantPhone: "",
   secondApplicantNrc: "",
   secondApplicantDateSigned: "",
+  userId: localStorage.getItem('userId'),
+  dateCreated: "",
+  status: 0,
+  referenceNo: getReferenceNumber(),
 };
 
 export { fields };

@@ -16,13 +16,11 @@ import {fields} from './skillsTrainingBursaryBlankForm';
 import api from '../../../api/api';
 
 const steps = ["Main", "Attachments", "Review your application"];
-const blankForm = fields;
-
 const theme = createTheme();
 
 const SkillsTrainingBursary = () => {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [formFields, setFormFields] = React.useState(blankForm);
+  const [formFields, setFormFields] = React.useState(fields);
 
   const handleNext = (e) => {
     setActiveStep(activeStep + 1);
@@ -37,7 +35,7 @@ const SkillsTrainingBursary = () => {
 
   const handleSubmitApplication = () => {
     try {
-      api.post('/skillstrainingbursary', formFields);
+      api.post('/skillstrainingbursary', formFields, {headers: {'Authorization': `Bearer ${localStorage.getItem("bearer-token")}`}});
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
@@ -78,7 +76,7 @@ const SkillsTrainingBursary = () => {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your application.
+                CDF application with reference number {formFields.referenceNo} has been submitted succefully. Thank you for your application. 
                 </Typography>
               </React.Fragment>
             ) : (

@@ -58,7 +58,7 @@ const EmpowermentLoan = () => {
 
   const handleSubmitApplication = () => {
     try {
-      api.post("/empowermentloans", formFields);
+      api.post("/empowermentloans", formFields, {headers: {'Authorization': `Bearer ${localStorage.getItem("bearer-token")}`}});
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
@@ -85,7 +85,7 @@ const EmpowermentLoan = () => {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your application.
+                CDF application with reference number {formFields.referenceNo} has been submitted succefully. Thank you for your application. 
                 </Typography>
               </React.Fragment>
             ) : (

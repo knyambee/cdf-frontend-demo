@@ -36,7 +36,6 @@ export default function SkillsTrainingBursaryDetailForm({
   formFields.applicantSigningDate = applicantSigningDateValue;
   return (
     <React.Fragment>
-      <form>
         <Typography variant="h6" gutterBottom>
           PART A: TO BE COMPLETED BY APPLICANT
         </Typography>
@@ -824,7 +823,6 @@ export default function SkillsTrainingBursaryDetailForm({
             </LocalizationProvider>
           </Grid>
         </Grid>
-      </form>
     </React.Fragment>
   );
 }

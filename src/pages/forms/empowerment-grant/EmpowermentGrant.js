@@ -12,10 +12,10 @@ import EmporwementGrantReview from "./EmpowerementGrantReview";
 import CoatOfArms from "../../layout/CoatOfArms";
 import EmpowerementGrantAttachments from "./EmpowerementGrantAttachments";
 import EmpowerementGrantDetailForm from "./EmpowerementGrantDetailForm";
+import { fields } from './empowermentGrantBlankForm';
 import api from "../../../api/api";
 
 const steps = ["Main", "Attachments", "Review your application"];
-const fields = {};
 
 const theme = createTheme();
 
@@ -59,7 +59,7 @@ const EmpowermentGrant = () => {
 
   const handleSubmitApplication = () => {
     try {
-      api.post("/empowermentgrants", formFields);
+      api.post("/empowermentgrants", formFields, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
@@ -88,7 +88,7 @@ const EmpowermentGrant = () => {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your application.
+                  CDF application with reference number {formFields.referenceNo} has been submitted succefully. Thank you for your application.
                 </Typography>
               </React.Fragment>
             ) : (

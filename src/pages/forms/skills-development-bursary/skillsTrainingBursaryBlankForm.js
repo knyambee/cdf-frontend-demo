@@ -1,3 +1,5 @@
+import { getReferenceNumber } from "utils/forms-util";
+
 const fields = {
     surname: '',
     otherNames: '',
@@ -63,7 +65,10 @@ const fields = {
     disabilityCard: '',
     recommendationLetter: '',
     certificates: '',
-
+    userId: localStorage.getItem('userId'),
+    dateCreated: "",
+    status: 0,
+    referenceNo: getReferenceNumber(),
 };
 
-export {fields};
+export { fields };
