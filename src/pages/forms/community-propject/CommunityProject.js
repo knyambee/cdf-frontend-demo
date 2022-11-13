@@ -88,7 +88,7 @@ const CommunityProject = () => {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your application.
+                CDF application with reference number {formFields.referenceNo} has been submitted succefully. Thank you for your application. 
                 </Typography>
               </React.Fragment>
             ) : (
