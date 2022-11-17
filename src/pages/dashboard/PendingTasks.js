@@ -1,16 +1,26 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
 import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 // third-party
-import NumberFormat from 'react-number-format';
+import Moment from 'moment';
 
 // project import
 import Dot from 'components/@extended/Dot';
-import api from 'api/api';
+
+function createData(referenceNo, fund, applicant, dateSubmitted, stage) {
+    return { referenceNo, fund, applicant, dateSubmitted, stage };
+}
+
+const rows = [
+    createData(84564564, 'Community Project', 'Kelvin Nyambe',Moment().format('DD-MM-YYYY'), "Approval"),
+    createData(98764564, 'Loan Emporwement', 'John Doe', Moment().format('DD-MM-YYYY'), "Evaluate"),
+    createData(98756325, 'Grant', 'Paul Banda', Moment().format('DD-MM-YYYY'), "Approval"),
+    createData(98652366, 'Skills Development Bursary', 'LCC', Moment().format('DD-MM-YYYY'), "Approval"),
+];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -48,34 +58,34 @@ const headCells = [
         label: 'Reference No.'
     },
     {
-        id: 'applicant',
-        align: 'left',
-        disablePadding: true,
-        label: 'Applicant'
-    },
-    {
         id: 'fund',
         align: 'left',
         disablePadding: true,
         label: 'Funding'
     },
     {
+        id: 'applicant',
+        align: 'left',
+        disablePadding: true,
+        label: 'Applicant'
+    },
+    {
         id: 'date',
-        align: 'right',
+        align: 'left',
         disablePadding: false,
         label: 'Date Submitted'
     },
     {
-        id: 'amount',
-        align: 'right',
+        id: 'stage',
+        align: 'left',
         disablePadding: false,
-        label: 'Total Amount'
+        label: 'Stage'
     }
 ];
 
-// ==============================|| APPLICATIONS TABLE - HEADER ||============================== //
+// ==============================|| ORDER TABLE - HEADER ||============================== //
 
-function ApplicationsTableHead({ order, orderBy }) {
+function PendingTasksTableHead({ order, orderBy }) {
     return (
         <TableHead>
             <TableRow>
@@ -94,14 +104,14 @@ function ApplicationsTableHead({ order, orderBy }) {
     );
 }
 
-ApplicationsTableHead.propTypes = {
+PendingTasksTableHead.propTypes = {
     order: PropTypes.string,
     orderBy: PropTypes.string
 };
 
-// ==============================|| APPLICATIONS TABLE - STATUS ||============================== //
+// ==============================|| ORDER TABLE - STATUS ||============================== //
 
-const ApplicationStatus = ({ status }) => {
+const OrderStatus = ({ status }) => {
     let color;
     let title;
 
@@ -131,33 +141,19 @@ const ApplicationStatus = ({ status }) => {
     );
 };
 
-ApplicationStatus.propTypes = {
+OrderStatus.propTypes = {
     status: PropTypes.number
 };
 
-// ==============================|| APPLICATIONS TABLE ||============================== //
+// ==============================|| ORDER TABLE ||============================== //
 
-export default function PendingTasks() {
+export default function PendingTasksTable() {
     const [order] = useState('asc');
     const [orderBy] = useState('referenceNo');
     const [selected] = useState([]);
-    const [userApplications, setUserApplications] = useState([]);
 
     const isSelected = (referenceNo) => selected.indexOf(referenceNo) !== -1;
 
-    // useEffect(() => {
-    //     const fetchUserApplications = async () => {
-    //         try {
-    //             const response = await api.get('/communityprojects', {headers: {'Authorization': `Bearer ${localStorage.getItem("bearer-token")}`}});
-    //             setUserApplications(response.data._embedded.communityProjectses[0]);
-    //         } catch (error) {
-    //             console.log(`Error ${error.response.data}`);
-    //         }
-    //     }
-    //     fetchUserApplications();
-    // }, []);
-
-     
     return (
         <Box>
             <TableContainer
@@ -181,10 +177,10 @@ export default function PendingTasks() {
                         }
                     }}
                 >
-                    <ApplicationsTableHead order={order} orderBy={orderBy} />
+                    <PendingTasksTableHead order={order} orderBy={orderBy} />
                     <TableBody>
-                        {userApplications.map((application, index) => {
-                            const isItemSelected = isSelected(userApplications.referenceNo);
+                        {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
+                            const isItemSelected = isSelected(row.referenceNo);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
@@ -194,22 +190,18 @@ export default function PendingTasks() {
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     aria-checked={isItemSelected}
                                     tabIndex={-1}
-                                    key={index}
+                                    key={row.referenceNo}
                                     selected={isItemSelected}
                                 >
                                     <TableCell component="th" id={labelId} scope="row" align="left">
                                         <Link color="secondary" component={RouterLink} to="">
-                                            {application.userId}
+                                            {row.referenceNo}
                                         </Link>
                                     </TableCell>
-                                    <TableCell align="left">{application.nameProjectSeconder}</TableCell>
-                                    <TableCell align="right">{application.date}</TableCell>
-                                    <TableCell align="left">
-                                        <ApplicationStatus status={application.status} />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <NumberFormat value={application.estimatedCost} displayType="text" thousandSeparator prefix="ZMK" />
-                                    </TableCell>
+                                    <TableCell align="left">{row.fund}</TableCell>
+                                    <TableCell align="left">{row.applicant}</TableCell>
+                                    <TableCell align="left">{row.dateSubmitted}</TableCell>
+                                    <TableCell align="left">{row.stage}</TableCell>
                                 </TableRow>
                             );
                         })}
