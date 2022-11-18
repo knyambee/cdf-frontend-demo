@@ -19,7 +19,7 @@ export default function ApplicationsTable() {
 
   React.useEffect(() => {
     const fetchRecentApplications = async () => {
-      const response = await api.get("/recentapplications", { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
+      const response = await api.get(`/recentapplications/search/findByUserId?userId=${localStorage.getItem('userId')}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
       setRecentApplications(response.data._embedded.fundses);
     }
     fetchRecentApplications();
