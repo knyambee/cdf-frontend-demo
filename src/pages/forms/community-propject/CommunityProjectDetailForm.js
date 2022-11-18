@@ -201,12 +201,12 @@ export default function CommunityProjectDetailForm({
             onChange={handleOnChange}
           ></TextField>
           <TextField
-            id="doneBeforeExplaination"
-            name="doneBeforeExplaination"
+            id="doneBeforeExplanation"
+            name="doneBeforeExplanation"
             label="Explain"
             fullWidth
             variant="standard"
-            value={formFields.doneBeforeExplaination}
+            value={formFields.doneBeforeExplanation}
             onChange={handleOnChange}
           />
         </Grid>
@@ -246,12 +246,12 @@ export default function CommunityProjectDetailForm({
         </Grid>
         <Grid item xs={12}>
           <TextField
-            id="committeMembers"
-            name="committeMembers"
+            id="committeeMembers"
+            name="committeeMembers"
             label="15. List the proposed Project Committe Members:"
             fullWidth
             variant="standard"
-            value={formFields.committeMembers}
+            value={formFields.committeeMembers}
             onChange={handleOnChange}
           />
         </Grid>
