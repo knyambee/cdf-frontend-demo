@@ -11,6 +11,8 @@ const Approve = () => {
     const { taskId } = useParams();
     const fundType = state.data.taskName;
 
+    console.log(state);
+
     const [approvalForm, setApprovalForm] = useState("");
 
     const [communityProjectFormVisible, setCommunityProjectFormVisible] =
@@ -37,13 +39,12 @@ const Approve = () => {
             setApprovalForm("empowermentLoan")
         } else if (fundType.includes("Skills")) {
             setApprovalForm("skillsDevelopmentBursary");
-        } else {
+        } else if (fundType.includes("Boarding")){
             setApprovalForm("secondaryBoardingBursary");
         }
     }
 
     useEffect(() => {
-
         handleApprovalForm();
 
         approvalForm === "communityProject"
@@ -61,7 +62,7 @@ const Approve = () => {
         approvalForm === "skillsDevelopmentBursary"
             ? setSkillsTrainingBursaryFormVisible(true)
             : setSkillsTrainingBursaryFormVisible(false);
-    }, [approvalForm]);
+        },  [approvalForm]);
 
     return (
         <main>
