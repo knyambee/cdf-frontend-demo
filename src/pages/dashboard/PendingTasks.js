@@ -196,7 +196,7 @@ export default function PendingTasks() {
                                 >
                                     <TableCell component="th" id={labelId} scope="row" align="left">
                                         <Link color="secondary" component={RouterLink} to={`/approve/${row.taskId}`} state={{
-                                            data: userTasks
+                                            data: userTasks.find(x => x.taskId === `${row.taskId}`)
                                         }}>
                                             {row.taskId}
                                         </Link>

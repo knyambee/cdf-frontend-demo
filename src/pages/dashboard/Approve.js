@@ -9,8 +9,8 @@ import { useParams, useLocation } from "react-router";
 const Approve = () => {
     const { state } = useLocation();
     const { taskId } = useParams();
-    const fundType = state.data[0].taskName;
-    
+    const fundType = state.data.taskName;
+
     const [approvalForm, setApprovalForm] = useState("");
 
     const [communityProjectFormVisible, setCommunityProjectFormVisible] =
@@ -28,7 +28,7 @@ const Approve = () => {
         setSkillsTrainingBursaryFormVisible,
     ] = useState(false);
 
-    const handleApprovalForm= () => {
+    const handleApprovalForm = () => {
         if (fundType.includes("Grant")) {
             setApprovalForm("empowermentGrant");
         } else if (fundType.includes("Project")) {
@@ -65,11 +65,11 @@ const Approve = () => {
 
     return (
         <main>
-            {communityProjectFormVisible && <CommunityProjectApprovalForm taskId={taskId} formFields={state.data[0].taskDetails} />}
-            {emporwerentGrantFormVisible && <EmpowermentGrantApprovalForm taskId={taskId} formFields={state.data[0].taskDetails} />}
-            {empowermentLoanFormVisible && <EmpowermentLoanApprovalForm taskId={taskId} formFields={state.data[0].taskDetails} />}
-            {SecondaryBoardingBursaryFormVisible && <SecondaryBoardingBursaryApprovalForm taskId={taskId} formFields={state.data[0].taskDetails} />}
-            {skillsTrainingBursaryFormVisible && <SkillsTrainingBursaryApprovalForm taskId={taskId} formFields={state.data[0].taskDetails} />}
+            {communityProjectFormVisible && <CommunityProjectApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
+            {emporwerentGrantFormVisible && <EmpowermentGrantApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
+            {empowermentLoanFormVisible && <EmpowermentLoanApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
+            {SecondaryBoardingBursaryFormVisible && <SecondaryBoardingBursaryApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
+            {skillsTrainingBursaryFormVisible && <SkillsTrainingBursaryApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
         </main>
     );
 };
