@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project import
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
+import Approve from 'pages/dashboard/Approve';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -52,6 +53,10 @@ const MainRoutes = {
         {
             path: 'secondary-boarding-bursary',
             element: <SecondaryBoardingBursary />
+        },
+        {
+            path: 'approve/:taskId',
+            element: <Approve />
         }
     ]
 };

@@ -1,20 +1,14 @@
-import { useState } from 'react';
 
 // material-ui
 import {
     Avatar,
-    AvatarGroup,
-    Box,
-    Button,
     Grid,
     List,
     ListItemAvatar,
     ListItemButton,
     ListItemSecondaryAction,
     ListItemText,
-    MenuItem,
     Stack,
-    TextField,
     Typography
 } from '@mui/material';
 
@@ -22,15 +16,11 @@ import {
 import ApplicationsTable from './ApplicationsTable';
 import PendingTasks from './PendingTasks';
 import MainCard from 'components/MainCard';
-import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 import RenderOnRole from 'security/RenderOnRole';
+import OrderTable from './PendingTasks';
 
 // assets
 import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
-import avatar1 from 'assets/images/users/avatar-1.png';
-import avatar2 from 'assets/images/users/avatar-2.png';
-import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
 
 // avatar style
 const avatarSX = {
@@ -49,27 +39,10 @@ const actionSX = {
     transform: 'none'
 };
 
-// sales report status
-const status = [
-    {
-        value: 'today',
-        label: 'Today'
-    },
-    {
-        value: 'month',
-        label: 'This Month'
-    },
-    {
-        value: 'year',
-        label: 'This Year'
-    }
-];
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
-    const [value, setValue] = useState('today');
-    const [slot, setSlot] = useState('week');
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -101,10 +74,9 @@ const DashboardDefault = () => {
                     <Grid item />
                 </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <PendingTasks />
+                    <OrderTable />
                 </MainCard>
             </Grid>
-
             </RenderOnRole>
 
             {/* row 4 */}

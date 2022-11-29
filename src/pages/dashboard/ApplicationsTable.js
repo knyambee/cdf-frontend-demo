@@ -12,8 +12,6 @@ const columns = [
 ];
 
 
-
-
 export default function ApplicationsTable() {
   const [recentApplications, setRecentApplications] = React.useState([]);
 
