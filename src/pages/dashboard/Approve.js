@@ -10,6 +10,7 @@ const Approve = () => {
     const { state } = useLocation();
     const { taskId } = useParams();
     const fundType = state.data.taskName;
+    const formFields = state.data.taskDetails;
 
     const [approvalForm, setApprovalForm] = useState("");
 
@@ -64,11 +65,11 @@ const Approve = () => {
 
     return (
         <main>
-            {communityProjectFormVisible && <CommunityProjectApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
-            {emporwerentGrantFormVisible && <EmpowermentGrantApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
-            {empowermentLoanFormVisible && <EmpowermentLoanApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
-            {SecondaryBoardingBursaryFormVisible && <SecondaryBoardingBursaryApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
-            {skillsTrainingBursaryFormVisible && <SkillsTrainingBursaryApprovalForm taskId={taskId} formFields={state.data.taskDetails} />}
+            {communityProjectFormVisible && <CommunityProjectApprovalForm taskId={taskId} formFields={formFields} />}
+            {emporwerentGrantFormVisible && <EmpowermentGrantApprovalForm taskId={taskId} formFields={formFields} />}
+            {empowermentLoanFormVisible && <EmpowermentLoanApprovalForm taskId={taskId} formFields={formFields} />}
+            {SecondaryBoardingBursaryFormVisible && <SecondaryBoardingBursaryApprovalForm taskId={taskId} formFields={formFields} />}
+            {skillsTrainingBursaryFormVisible && <SkillsTrainingBursaryApprovalForm taskId={taskId} formFields={formFields} />}
         </main>
     );
 };
