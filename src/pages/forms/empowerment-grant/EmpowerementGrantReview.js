@@ -11,8 +11,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 export default function EmpowerementGrantReview({formFields}) {  
 
-  console.log(formFields);
-  
   return (
     <React.Fragment>
     <Typography variant="h6" gutterBottom>

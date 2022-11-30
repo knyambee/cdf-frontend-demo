@@ -46,7 +46,7 @@ const headCells = [
         id: 'trackingNo',
         align: 'left',
         disablePadding: false,
-        label: 'Reference Number'
+        label: 'Task ID'
     },
     {
         id: 'name',
@@ -56,23 +56,10 @@ const headCells = [
     },
     {
         id: 'fat',
-        align: 'right',
+        align: 'left',
         disablePadding: false,
         label: 'Date Submitted'
     },
-    {
-        id: 'carbs',
-        align: 'left',
-        disablePadding: false,
-
-        label: 'Status'
-    },
-    {
-        id: 'protein',
-        align: 'right',
-        disablePadding: false,
-        label: 'Total Amount'
-    }
 ];
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
@@ -202,13 +189,7 @@ export default function PendingTasks() {
                                         </Link>
                                     </TableCell>
                                     <TableCell align="left">{row.taskName}</TableCell>
-                                    <TableCell align="right">{row.dateCreated}</TableCell>
-                                    <TableCell align="left">
-                                        <OrderStatus status={row.carbs} />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
-                                    </TableCell>
+                                    <TableCell align="left">{row.dateCreated}</TableCell>
                                 </TableRow>
                             );
                         })}

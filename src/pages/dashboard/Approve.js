@@ -11,8 +11,6 @@ const Approve = () => {
     const { taskId } = useParams();
     const fundType = state.data.taskName;
 
-    console.log(state);
-
     const [approvalForm, setApprovalForm] = useState("");
 
     const [communityProjectFormVisible, setCommunityProjectFormVisible] =

@@ -17,24 +17,24 @@ import approve from './ApprovalResponse';
 const theme = createTheme();
 
 const CommunityProjectApprovalForm = ({ formFields, taskId }) => {
-    const [wardCommitteeResponse, setWardCommitteeResponse] = useState(approve);
+    const [adminResponse] = useState(approve);
 
-    const handleWardCommittieeAproval = () => {
-            wardCommitteeResponse.id = taskId;
-            wardCommitteeResponse.status = true;
+    const handleApproval = () => {
+        adminResponse.id = taskId;
+        adminResponse.status = true;
         try {
-            api.post("/approve", wardCommitteeResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
-        } catch(err) {
+            api.post("/approve", adminResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
+        } catch (err) {
             console.log(`Error ${err.message}`);
         }
     };
-    
-    const handleWardCommittieeRejection = () => {
-        wardCommitteeResponse.id = taskId;
-        wardCommitteeResponse.status = false;
+
+    const handleRejection = () => {
+        adminResponse.id = taskId;
+        adminResponse.status = false;
         try {
-            api.post("/approve", wardCommitteeResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
-        } catch(err) {
+            api.post("/approve", adminResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
+        } catch (err) {
             console.log(`Error ${err.message}`);
         }
     };
@@ -470,8 +470,8 @@ const CommunityProjectApprovalForm = ({ formFields, taskId }) => {
                             <Grid item xs={12}>
                                 <Stack spacing={2} direction="row" justifyContent="center"
                                 >
-                                    <Button variant="contained" color="success" size="large" onClick={handleWardCommittieeAproval}>Approve</Button>
-                                    <Button variant="contained" color="error" size="large" onClick={handleWardCommittieeRejection}>Reject</Button>
+                                    <Button variant="contained" color="error" size="large" onClick={handleRejection}>Reject</Button>
+                                    <Button variant="contained" color="success" size="large" onClick={handleApproval}>Approve</Button>
                                 </Stack>
                             </Grid>
                         </Grid>

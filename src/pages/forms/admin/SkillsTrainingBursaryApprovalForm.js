@@ -2,6 +2,8 @@ import React from 'react';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -10,27 +12,29 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import CoatOfArms from "../../layout/CoatOfArms";
 import approve from './ApprovalResponse';
+import { useState } from 'react';
+import api from 'api/api';
 
 const theme = createTheme();
 
 const SkillsTrainingBursaryApprovalForm = ({ formFields, taskId }) => {
-  const [wardCommitteeResponse, setWardCommitteeResponse] = useState(approve);
+  const [adminResponse] = useState(approve);
 
-  const handleWardCommittieeAproval = () => {
-    wardCommitteeResponse.id = taskId;
-    wardCommitteeResponse.status = true;
+  const handleApproval = () => {
+    adminResponse.id = taskId;
+    adminResponse.status = true;
     try {
-      api.post("/approve", wardCommitteeResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
+      api.post("/approve", adminResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
   };
 
-  const handleWardCommittieeRejection = () => {
-    wardCommitteeResponse.id = taskId;
-    wardCommitteeResponse.status = false;
+  const handleRejection = () => {
+    adminResponse.id = taskId;
+    adminResponse.status = false;
     try {
-      api.post("/approve", wardCommitteeResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
+      api.post("/approve", adminResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
@@ -977,8 +981,8 @@ const SkillsTrainingBursaryApprovalForm = ({ formFields, taskId }) => {
               <Grid item xs={12}>
                 <Stack spacing={2} direction="row" justifyContent="center"
                 >
-                  <Button variant="contained" color="success" size="large" onClick={handleWardCommittieeAproval}>Approve</Button>
-                  <Button variant="contained" color="error" size="large" onClick={handleWardCommittieeRejection}>Reject</Button>
+                  <Button variant="contained" color="error" size="large" onClick={handleRejection}>Reject</Button>
+                  <Button variant="contained" color="success" size="large" onClick={handleApproval}>Approve</Button>
                 </Stack>
               </Grid>
             </Grid>
