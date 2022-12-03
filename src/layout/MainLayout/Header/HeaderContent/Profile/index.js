@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
+import AuthService from 'security/AuthService';
+import { useNavigate} from 'react-router-dom';
+
+
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -55,9 +59,12 @@ function a11yProps(index) {
 
 const Profile = () => {
     const theme = useTheme();
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         // logout
+        navigate('/');
+        AuthService.logout();
     };
 
     const anchorRef = useRef(null);

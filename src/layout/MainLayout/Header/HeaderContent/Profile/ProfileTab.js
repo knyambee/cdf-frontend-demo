@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import AuthService from 'security/AuthService';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -17,6 +16,8 @@ const ProfileTab = ({ handleLogout }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
+
+
     };
 
     return (
@@ -33,7 +34,7 @@ const ProfileTab = ({ handleLogout }) => {
                 </ListItemIcon>
                 <ListItemText primary="View Profile" />
             </ListItemButton>
-            <ListItemButton selected={selectedIndex === 2} onClick={AuthService.logout}>
+            <ListItemButton selected={selectedIndex === 2} onClick={handleLogout}>
                 <ListItemIcon>
                     <LogoutOutlined />
                 </ListItemIcon>

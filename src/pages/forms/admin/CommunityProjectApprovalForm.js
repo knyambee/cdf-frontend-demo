@@ -13,11 +13,15 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import api from 'api/api';
 import approve from './ApprovalResponse';
+import { useNavigate} from 'react-router-dom';
+
 
 const theme = createTheme();
 
 const CommunityProjectApprovalForm = ({ formFields, taskId }) => {
     const [adminResponse] = useState(approve);
+    const navigate = useNavigate();
+
 
     const handleApproval = () => {
         adminResponse.id = taskId;
@@ -27,6 +31,7 @@ const CommunityProjectApprovalForm = ({ formFields, taskId }) => {
         } catch (err) {
             console.log(`Error ${err.message}`);
         }
+        navigate('/');
     };
 
     const handleRejection = () => {
@@ -37,6 +42,7 @@ const CommunityProjectApprovalForm = ({ formFields, taskId }) => {
         } catch (err) {
             console.log(`Error ${err.message}`);
         }
+        navigate('/');
     };
 
     return (
