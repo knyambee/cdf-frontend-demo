@@ -14,6 +14,8 @@ import EmpowerementLoanAttachments from "./EmpowerementLoanAttachments";
 import EmpowerementLoanReview from "./EmpowerementLoanReview";
 import { fields } from "./empowermentLoanBlankForm";
 import api from "../../../api/api";
+import { useNavigate} from 'react-router-dom';
+
 
 const steps = ["Main", "Attachments", "Review your application"];
 const theme = createTheme();
@@ -21,7 +23,8 @@ const theme = createTheme();
 const EmpowermentLoan = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formFields, setFormFields] = React.useState(fields);
-
+  const navigate = useNavigate();
+  
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -59,6 +62,7 @@ const EmpowermentLoan = () => {
   const handleSubmitApplication = () => {
     try {
       api.post("/empowermentloans", formFields, {headers: {'Authorization': `Bearer ${localStorage.getItem("bearer-token")}`}});
+      navigate('/');
     } catch (err) {
       console.log(`Error ${err.message}`);
     }

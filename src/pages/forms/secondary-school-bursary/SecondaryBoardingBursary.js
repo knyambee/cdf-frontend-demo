@@ -13,6 +13,7 @@ import SecondaryBoardingBursaryDetailForm from "./SecondaryBoardingBursaryDetail
 import SecondaryBoardingBursaryAttachments from "./SecondaryBoardingBursaryAttachments";
 import SecondaryBoardingBursaryReview from "./SecondaryBoardingBursaryReview";
 
+
 const steps = ["Main", "Attachments", "Review your application"];
 const fields = {};
 

@@ -14,14 +14,16 @@ import CommunityProjectReview from "./CommunityProjectReview";
 import CoatOfArms from "../../layout/CoatOfArms";
 import { fields } from "./communityProjectsBlankForm";
 import api from "../../../api/api";
+import { useNavigate } from 'react-router-dom';
 
 const steps = ["Main", "Attachments", "Review your application"];
-
 const theme = createTheme();
 
 const CommunityProject = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formFields, setFormFields] = React.useState(fields);
+  const navigate = useNavigate();
+
 
   function getStepContent(step) {
     switch (step) {
@@ -57,9 +59,10 @@ const CommunityProject = () => {
   };
 
   const handleSubmitApplication = () => {
-    
+
     try {
-      api.post("/communityprojects", formFields, {headers: {'Authorization': `Bearer ${localStorage.getItem("bearer-token")}`}});
+      api.post("/communityprojects", formFields, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
+      navigate('/');
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
@@ -88,7 +91,7 @@ const CommunityProject = () => {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                CDF application with reference number {formFields.referenceNo} has been submitted succefully. Thank you for your application. 
+                  CDF application with reference number {formFields.referenceNo} has been submitted succefully. Thank you for your application.
                 </Typography>
               </React.Fragment>
             ) : (

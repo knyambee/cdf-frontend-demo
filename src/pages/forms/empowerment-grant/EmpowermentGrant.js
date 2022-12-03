@@ -14,6 +14,8 @@ import EmpowerementGrantAttachments from "./EmpowerementGrantAttachments";
 import EmpowerementGrantDetailForm from "./EmpowerementGrantDetailForm";
 import { fields } from './empowermentGrantBlankForm';
 import api from "../../../api/api";
+import { useNavigate} from 'react-router-dom';
+
 
 const steps = ["Main", "Attachments", "Review your application"];
 
@@ -22,6 +24,7 @@ const theme = createTheme();
 const EmpowermentGrant = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formFields, setFormFields] = React.useState(fields);
+  const navigate = useNavigate();
 
   function getStepContent(step) {
     switch (step) {
@@ -60,6 +63,7 @@ const EmpowermentGrant = () => {
   const handleSubmitApplication = () => {
     try {
       api.post("/empowermentgrants", formFields, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
+      navigate("/");
     } catch (err) {
       console.log(`Error ${err.message}`);
     }

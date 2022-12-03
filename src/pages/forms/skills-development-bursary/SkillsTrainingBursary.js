@@ -12,8 +12,9 @@ import SkillsTrainingBursaryDetailForm from "./SkillsTrainingBursaryDetailForm";
 import SkillsTrainingBursaryAttachments from "./SkillsTrainingBursaryAttachments";
 import SkillsTrainingBursaryReview from "./SkillsTrainingBursaryReview";
 import CoatOfArms from "../../layout/CoatOfArms";
-import {fields} from './skillsTrainingBursaryBlankForm';
+import { fields } from './skillsTrainingBursaryBlankForm';
 import api from '../../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 const steps = ["Main", "Attachments", "Review your application"];
 const theme = createTheme();
@@ -21,6 +22,7 @@ const theme = createTheme();
 const SkillsTrainingBursary = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formFields, setFormFields] = React.useState(fields);
+  const navigate = useNavigate();
 
   const handleNext = (e) => {
     setActiveStep(activeStep + 1);
@@ -35,7 +37,8 @@ const SkillsTrainingBursary = () => {
 
   const handleSubmitApplication = () => {
     try {
-      api.post('/skillstrainingbursary', formFields, {headers: {'Authorization': `Bearer ${localStorage.getItem("bearer-token")}`}});
+      api.post('/skillstrainingbursary', formFields, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
+      navigate("/");
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
@@ -76,7 +79,7 @@ const SkillsTrainingBursary = () => {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                CDF application with reference number {formFields.referenceNo} has been submitted succefully. Thank you for your application. 
+                  CDF application with reference number {formFields.referenceNo} has been submitted succefully. Thank you for your application.
                 </Typography>
               </React.Fragment>
             ) : (
