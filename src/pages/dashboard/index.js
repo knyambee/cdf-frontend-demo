@@ -14,10 +14,9 @@ import {
 
 // project import
 import ApplicationsTable from './ApplicationsTable';
-import PendingTasks from './PendingTasks';
 import MainCard from 'components/MainCard';
 import RenderOnRole from 'security/RenderOnRole';
-import OrderTable from './PendingTasks';
+import PendingTasks from './PendingTasks';
 
 // assets
 import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
@@ -43,7 +42,6 @@ const actionSX = {
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
-
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
             {/* row 1 */}
@@ -74,7 +72,7 @@ const DashboardDefault = () => {
                     <Grid item />
                 </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <OrderTable />
+                    <PendingTasks />
                 </MainCard>
             </Grid>
             </RenderOnRole>
@@ -167,6 +165,7 @@ const DashboardDefault = () => {
                 </MainCard>
             </Grid>
         </Grid>
+
     );
 };
 

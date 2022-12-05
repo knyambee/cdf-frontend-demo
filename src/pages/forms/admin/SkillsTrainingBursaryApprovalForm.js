@@ -967,9 +967,26 @@ const SkillsTrainingBursaryApprovalForm = ({ formFields, taskId }) => {
             </Grid>
 
             <br />
-            <Typography variant="h6" gutterBottom>
-              WARD COMMITTEE REVIEW
-            </Typography>
+            <RenderOnRole roles={['ward']}>
+              <Typography variant="h6" gutterBottom>
+                WARD COMMITTEE REVIEW
+              </Typography>
+            </RenderOnRole>
+            <RenderOnRole roles={['constituency']}>
+              <Typography variant="h6" gutterBottom>
+                CONSTITUENCY DEVELOPMENT COMMITTEE REVIEW
+              </Typography>
+            </RenderOnRole>
+            <RenderOnRole roles={['local_government']}>
+              <Typography variant="h6" gutterBottom>
+                LOCAL GOVERNMENT REVIEW
+              </Typography>
+            </RenderOnRole>
+            <RenderOnRole roles={['minister']}>
+              <Typography variant="h6" gutterBottom>
+                MINISTER REVIEW
+              </Typography>
+            </RenderOnRole>
 
             <Grid container spacing={3}>
               <Grid item xs={12}>

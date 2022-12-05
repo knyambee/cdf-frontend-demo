@@ -7,6 +7,8 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CommunityProjectDetailForm from "./CommunityProjectDetailForm";
 import CommunityProjectAttachments from "./CommunityProjectAttachments";
@@ -16,12 +18,18 @@ import { fields } from "./communityProjectsBlankForm";
 import api from "../../../api/api";
 import { useNavigate } from 'react-router-dom';
 
+
 const steps = ["Main", "Attachments", "Review your application"];
 const theme = createTheme();
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const CommunityProject = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formFields, setFormFields] = React.useState(fields);
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
 
@@ -46,7 +54,15 @@ const CommunityProject = () => {
       default:
         throw new Error("Unknown step");
     }
-  }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleNext = (e) => {
     setActiveStep(activeStep + 1);
@@ -59,10 +75,10 @@ const CommunityProject = () => {
   };
 
   const handleSubmitApplication = () => {
-
+    setOpen(true);
     try {
       api.post("/communityprojects", formFields, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
-      navigate('/');
+      // navigate('/');
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
@@ -113,6 +129,11 @@ const CommunityProject = () => {
                       ? "Submit application"
                       : "Next"}
                   </Button>
+                  <Snackbar open={open} autoHideDuration={60000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                      Your application has been submitted succefully.
+                    </Alert>
+                  </Snackbar>
                 </Box>
               </React.Fragment>
             )}
