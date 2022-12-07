@@ -9,6 +9,11 @@ import Paper from "@mui/material/Paper";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from "@mui/material/Typography";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -27,6 +32,8 @@ const theme = createTheme();
 const EmpowermentGrantApprovalForm = ({ formFields, taskId }) => {
   const [adminResponse] = useState(approve);
   const [comment, setComment] = useState("");
+  const [approvalOpen, setApprovalOpen] = React.useState(false);
+  const [rejectionOpen, setRejectionOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const handleOnChange = (e) => {
@@ -54,6 +61,24 @@ const EmpowermentGrantApprovalForm = ({ formFields, taskId }) => {
     }
     navigate('/');
   };
+
+  const handleClickOpenApprovalDialog = () => {
+    setApprovalOpen(true);
+  };
+
+  const handleClickOpenRejectionDialog = () => {
+    setRejectionOpen(true);
+  };
+
+  const handleApprovalClose = () => {
+    setApprovalOpen(false);
+  };
+
+  const handleRejectionClose = () => {
+    setRejectionOpen(false);
+  };
+
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="md" sx={{ mb: 8 }}>
@@ -632,8 +657,56 @@ const EmpowermentGrantApprovalForm = ({ formFields, taskId }) => {
               <Grid item xs={12}>
                 <Stack spacing={2} direction="row" justifyContent="center"
                 >
-                  <Button variant="contained" color="error" size="large" onClick={handleRejection}>Reject</Button>
-                  <Button variant="contained" color="success" size="large" onClick={handleApproval}>Approve</Button>
+                  <Button variant="contained" color="error" size="large" onClick={handleClickOpenRejectionDialog}>Reject</Button>
+                  <Dialog
+                    open={rejectionOpen}
+                    onClose={handleRejectionClose}
+                  >
+                    <DialogTitle id="rejectionTitle">
+                      {"Reject application?"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="rejectionDescription">
+                        The appliction will be rejected and applicant or previous officer notified.
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleRejectionClose}>Cancel</Button>
+                      <Button onClick={handleRejection}>
+                        Reject
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <Button variant="contained" color="success" size="large" onClick={handleClickOpenApprovalDialog}>Approve</Button>
+                  <Dialog
+                    open={approvalOpen}
+                    onClose={handleApprovalClose}
+                  >
+                    <DialogTitle id="approvalTitle">
+                      {"Approve application?"}
+                    </DialogTitle>
+                    <RenderOnRole roles={['ward', 'constituency', 'local_government']}>
+                      <DialogContent>
+                        <DialogContentText id="approvalDescription">
+                          The appliction will be passed on to the next stage for review.
+                        </DialogContentText>
+                      </DialogContent>
+                    </RenderOnRole>
+
+                    <RenderOnRole roles={['minister']}>
+                      <DialogContent>
+                        <DialogContentText id="ministerApprovalDescription">
+                          The application will be eligible for funding.
+                        </DialogContentText>
+                      </DialogContent>
+                    </RenderOnRole>
+                    <DialogActions>
+                      <Button onClick={handleApprovalClose}>Cancel</Button>
+                      <Button onClick={handleApproval}>
+                        Approve
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                 </Stack>
               </Grid>
             </Grid>
