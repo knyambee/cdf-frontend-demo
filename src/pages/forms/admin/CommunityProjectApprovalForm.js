@@ -13,20 +13,26 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import api from 'api/api';
 import approve from './ApprovalResponse';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import RenderOnRole from 'security/RenderOnRole';
 
 
 const theme = createTheme();
 
 const CommunityProjectApprovalForm = ({ formFields, taskId }) => {
-    const [adminResponse] = useState(approve);
+    const [adminResponse, setAdminResponse] = useState(approve);
+    const [comment, setComment] = useState("");
     const navigate = useNavigate();
+
+    const handleOnChange = (e) => {
+        setComment(e.target.value);
+    };
 
 
     const handleApproval = () => {
         adminResponse.id = taskId;
         adminResponse.status = true;
+        adminResponse.comment = comment;
         try {
             api.post("/approve", adminResponse, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
         } catch (err) {
@@ -464,28 +470,30 @@ const CommunityProjectApprovalForm = ({ formFields, taskId }) => {
                         </Grid>
                         <br />
                         <RenderOnRole roles={['ward']}>
-                        <Typography variant="h6" gutterBottom>
-                            WARD COMMITTEE REVIEW
-                        </Typography>
+                            <Typography variant="h6" gutterBottom>
+                                WARD COMMITTEE REVIEW
+                            </Typography>
                         </RenderOnRole>
-                        <RenderOnRole roles={['constituency']}> 
-                        <Typography variant="h6" gutterBottom>
-                            CONSTITUENCY DEVELOPMENT COMMITTEE REVIEW
-                        </Typography>
+                        <RenderOnRole roles={['constituency']}>
+                            <Typography variant="h6" gutterBottom>
+                                CONSTITUENCY DEVELOPMENT COMMITTEE REVIEW
+                            </Typography>
                         </RenderOnRole>
                         <RenderOnRole roles={['local_government']}>
-                        <Typography variant="h6" gutterBottom>
-                            LOCAL GOVERNMENT REVIEW
-                        </Typography>
+                            <Typography variant="h6" gutterBottom>
+                                LOCAL GOVERNMENT REVIEW
+                            </Typography>
                         </RenderOnRole>
                         <RenderOnRole roles={['minister']}>
-                        <Typography variant="h6" gutterBottom>
-                            MINISTER REVIEW
-                        </Typography>
+                            <Typography variant="h6" gutterBottom>
+                                MINISTER REVIEW
+                            </Typography>
                         </RenderOnRole>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <TextField fullWidth label="Comments" id="comments"
+                                    onChange={handleOnChange}
+                                    value={comment}
                                     multiline
                                     rows={6}
                                 />

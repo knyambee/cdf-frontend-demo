@@ -1,6 +1,8 @@
 const approve = {
 "id": "",
-"status": ""
+"status": "",
+"comment": "",
+"processesInstanceId": ""
 }
 
 export default approve;

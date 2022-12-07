@@ -78,10 +78,11 @@ const CommunityProject = () => {
     setOpen(true);
     try {
       api.post("/communityprojects", formFields, { headers: { 'Authorization': `Bearer ${localStorage.getItem("bearer-token")}` } });
-      // navigate('/');
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
+      navigate('/');
+
   };
 
   return (

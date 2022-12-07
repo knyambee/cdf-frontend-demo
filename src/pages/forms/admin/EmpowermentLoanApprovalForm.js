@@ -14,11 +14,21 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import CoatOfArms from "../../layout/CoatOfArms";
 import approve from './ApprovalResponse';
 import api from 'api/api';
+import RenderOnRole from 'security/RenderOnRole';
+import { useNavigate} from 'react-router-dom';
+
+
 
 const theme = createTheme();
 
 const EmpowermentLoanApprovalForm = ({ formFields, taskId }) => {
   const [adminResponse] = useState(approve);
+  const [comment, setComment] = useState("");
+  const navigate = useNavigate();
+
+  const handleOnChange = (e) => {
+      setComment(e.target.value);
+    };
 
   const handleApproval = () => {
     adminResponse.id = taskId;
@@ -28,6 +38,7 @@ const EmpowermentLoanApprovalForm = ({ formFields, taskId }) => {
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
+    navigate('/');
   };
 
   const handleRejection = () => {
@@ -38,6 +49,7 @@ const EmpowermentLoanApprovalForm = ({ formFields, taskId }) => {
     } catch (err) {
       console.log(`Error ${err.message}`);
     }
+    navigate('/');
   };
 
   return (
@@ -463,6 +475,8 @@ const EmpowermentLoanApprovalForm = ({ formFields, taskId }) => {
                 <TextField fullWidth label="Comments" id="comments"
                   multiline
                   rows={6}
+                  onChange={handleOnChange}
+                  value={comment}
                 />
               </Grid>
               <Grid item xs={12}>
