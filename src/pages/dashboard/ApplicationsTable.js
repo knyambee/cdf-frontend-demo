@@ -43,7 +43,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'trackingNo',
+    id: 'referenceNo',
     align: 'left',
     disablePadding: false,
     label: 'Reference Number'
@@ -55,20 +55,20 @@ const headCells = [
     label: 'Fund Type'
   },
   {
-    id: 'fat',
+    id: 'dateSubmitted',
     align: 'left',
     disablePadding: false,
     label: 'Date Submitted'
   },
   {
-    id: 'carbs',
+    id: 'status',
     align: 'left',
     disablePadding: false,
 
     label: 'Status'
   },
   {
-    id: 'protein',
+    id: 'amount',
     align: 'right',
     disablePadding: false,
     label: 'Amount'
@@ -77,7 +77,7 @@ const headCells = [
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
 
-function OrderTableHead({ order, orderBy }) {
+function RecentApplicationsTableHead({ order, orderBy }) {
   return (
     <TableHead>
       <TableRow>
@@ -96,12 +96,12 @@ function OrderTableHead({ order, orderBy }) {
   );
 }
 
-OrderTableHead.propTypes = {
+RecentApplicationsTableHead.propTypes = {
   order: PropTypes.string,
   orderBy: PropTypes.string
 };
 
-// ==============================|| ORDER TABLE - STATUS ||============================== //
+// ==============================|| USER APPLICATIONS TABLE - STATUS ||============================== //
 
 const OrderStatus = ({ status }) => {
   let color;
@@ -141,7 +141,7 @@ OrderStatus.propTypes = {
 
 export default function ApplicationsTable() {
   const [order] = useState('asc');
-  const [orderBy] = useState('trackingNo');
+  const [orderBy] = useState('referenceNo');
   const [selected] = useState([]);
   const [recentApplications, setRecentApplications] = useState([]);
 
@@ -154,7 +154,7 @@ export default function ApplicationsTable() {
     fetchRecentApplications();
   }, []);
 
-  const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
+  const isSelected = (referenceNo) => selected.indexOf(referenceNo) !== -1;
 
 
   return (
@@ -169,18 +169,8 @@ export default function ApplicationsTable() {
           '& td, & th': { whiteSpace: 'nowrap' }
         }}
       >
-        <Table
-          aria-labelledby="tableTitle"
-          sx={{
-            '& .MuiTableCell-root:first-child': {
-              pl: 2
-            },
-            '& .MuiTableCell-root:last-child': {
-              pr: 3
-            }
-          }}
-        >
-          <OrderTableHead order={order} orderBy={orderBy} />
+        <Table>
+          <RecentApplicationsTableHead order={order} orderBy={orderBy} />
           <TableBody>
             {stableSort(recentApplications, getComparator(order, orderBy)).map((row, index) => {
               const isItemSelected = isSelected(row.taskId);

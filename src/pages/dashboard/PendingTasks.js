@@ -6,12 +6,6 @@ import api from 'api/api';
 // material-ui
 import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
-// third-party
-import NumberFormat from 'react-number-format';
-
-// project import
-import Dot from 'components/@extended/Dot';
-
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -39,23 +33,23 @@ function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-// ==============================|| ORDER TABLE - HEADER CELL ||============================== //
+// ==============================|| PENDING TASKS TABLE - HEADER CELL ||============================== //
 
 const headCells = [
     {
-        id: 'trackingNo',
+        id: 'referenceNo',
         align: 'left',
         disablePadding: false,
         label: 'Task ID'
     },
     {
-        id: 'name',
+        id: 'task',
         align: 'left',
         disablePadding: true,
         label: 'Task'
     },
     {
-        id: 'fat',
+        id: 'dateSubmitted',
         align: 'left',
         disablePadding: false,
         label: 'Date Submitted'
@@ -64,7 +58,7 @@ const headCells = [
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
 
-function OrderTableHead({ order, orderBy }) {
+function PendingTasksTableHead({ order, orderBy }) {
     return (
         <TableHead>
             <TableRow>
@@ -83,52 +77,16 @@ function OrderTableHead({ order, orderBy }) {
     );
 }
 
-OrderTableHead.propTypes = {
+PendingTasksTableHead.propTypes = {
     order: PropTypes.string,
     orderBy: PropTypes.string
 };
 
-// ==============================|| ORDER TABLE - STATUS ||============================== //
-
-const OrderStatus = ({ status }) => {
-    let color;
-    let title;
-
-    switch (status) {
-        case 0:
-            color = 'warning';
-            title = 'Pending';
-            break;
-        case 1:
-            color = 'success';
-            title = 'Approved';
-            break;
-        case 2:
-            color = 'error';
-            title = 'Rejected';
-            break;
-        default:
-            color = 'primary';
-            title = 'None';
-    }
-
-    return (
-        <Stack direction="row" spacing={1} alignItems="center">
-            <Dot color={color} />
-            <Typography>{title}</Typography>
-        </Stack>
-    );
-};
-
-OrderStatus.propTypes = {
-    status: PropTypes.number
-};
-
-// ==============================|| ORDER TABLE ||============================== //
+// ==============================|| PENDING TASKS TABLE ||============================== //
 
 export default function PendingTasks() {
     const [order] = useState('asc');
-    const [orderBy] = useState('trackingNo');
+    const [orderBy] = useState('referenceNo');
     const [selected] = useState([]);
     const [userTasks, setUserTasks] = useState([]);
 
@@ -140,7 +98,7 @@ export default function PendingTasks() {
         fetchAssignedTasks();
     }, []);
 
-    const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
+    const isSelected = (referenceNo) => selected.indexOf(referenceNo) !== -1;
 
     return (
         <Box>
@@ -154,18 +112,8 @@ export default function PendingTasks() {
                     '& td, & th': { whiteSpace: 'nowrap' }
                 }}
             >
-                <Table
-                    aria-labelledby="tableTitle"
-                    sx={{
-                        '& .MuiTableCell-root:first-child': {
-                            pl: 2
-                        },
-                        '& .MuiTableCell-root:last-child': {
-                            pr: 3
-                        }
-                    }}
-                >
-                    <OrderTableHead order={order} orderBy={orderBy} />
+                <Table>
+                    <PendingTasksTableHead order={order} orderBy={orderBy} />
                     <TableBody>
                         {stableSort(userTasks, getComparator(order, orderBy)).map((row, index) => {
                             const isItemSelected = isSelected(row.taskId);
